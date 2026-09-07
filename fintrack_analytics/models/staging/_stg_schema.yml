@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: stg_comptes
+    description: "Comptes clients nettoyés et renommés depuis `raw_comptes`."
+    columns:
+      - name: compte_id
+        description: "Identifiant unique du compte."
+        tests:
+          - unique
+          - not_null
+      - name: type_compte
+        description: "Type de compte."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['courant', 'epargne', 'joint']
+      - name: statut
+        description: "Statut du compte."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['actif', 'inactif', 'cloture']
+
+  - name: stg_transactions
+    description: "Transactions nettoyées, avec un montant signé (+ crédit / − débit)."
+    columns:
+      - name: transaction_id
+        description: "Identifiant unique de la transaction."
+        tests:
+          - unique
+          - not_null
+      - name: compte_id
+        description: "Référence vers le compte associé à la transaction."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_comptes')
+                field: compte_id
+
+  - name: stg_categories
+    description: "Référentiel des catégories, nettoyé et renommé."
+    columns:
+      - name: categorie_id
+        description: "Identifiant unique de la catégorie."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_budgets
+    description: "Budgets mensuels nettoyés et renommés."
+    columns:
+      - name: budget_id
+        description: "Identifiant unique du budget."
+        tests:
+          - unique
+          - not_null

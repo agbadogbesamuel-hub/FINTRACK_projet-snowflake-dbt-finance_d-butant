@@ -1,0 +1,1 @@
+{{ test_accepted_values(column_name="type_compte", model=get_where_subquery(ref('stg_comptes')), values=["courant","epargne","joint"]) }}

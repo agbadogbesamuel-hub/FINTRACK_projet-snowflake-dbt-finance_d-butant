@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: raw
+    database: fintrack_db
+    schema: raw
+    description: "Données brutes de l'application FinTrack (comptes, transactions, catégories, budgets)."
+    tables:
+      - name: raw_comptes
+        description: "Comptes bancaires des clients FinTrack."
+      - name: raw_transactions
+        description: "Transactions quotidiennes des comptes."
+      - name: raw_categories
+        description: "Référentiel des catégories de dépenses et de revenus."
+      - name: raw_budgets
+        description: "Budgets mensuels définis par compte et par catégorie."

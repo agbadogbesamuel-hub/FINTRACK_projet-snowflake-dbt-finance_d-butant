@@ -1,0 +1,27 @@
+name: 'fintrack_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'fintrack_analytics'
+
+model-paths: ["models"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  fintrack_analytics:
+    staging:
+      +materialized: view          # donnees changeantes, pas besoin de stocker
+    intermediate:
+      +materialized: ephemeral     # CTE injectee, pas d'objet cree en base
+    marts:
+      +materialized: table         # modeles finaux consommes par la BI
+      +schema: marts                # schema cible = MARTS (pas de suffixe "staging_marts"),
+                                    # voir macros/generate_schema_name.sql

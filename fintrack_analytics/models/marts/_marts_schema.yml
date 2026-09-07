@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: dim_comptes
+    description: "Dimension des comptes clients, avec ancienneté calculée et clé de substitution (bonus)."
+    columns:
+      - name: compte_id
+        description: "Clé primaire du compte."
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_categories
+    description: "Dimension des catégories de dépenses et de revenus."
+    columns:
+      - name: categorie_id
+        description: "Clé primaire de la catégorie."
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_transactions
+    description: "Table de faits des transactions validées, enrichie des dimensions compte et catégorie."
+    columns:
+      - name: transaction_id
+        description: "Clé de la transaction (grain de la table)."
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_solde_mensuel
+    description: "Solde mensuel de chaque compte : crédits, débits, solde net et solde cumulé depuis l'ouverture."
+
+  - name: mart_budget_vs_reel
+    description: "Comparaison entre budget prévu et dépenses réelles, par compte / catégorie / mois."
+
+  - name: mart_top_depenses
+    description: "(Bonus) Top 3 des catégories de dépenses par compte, classées par montant total dépensé."

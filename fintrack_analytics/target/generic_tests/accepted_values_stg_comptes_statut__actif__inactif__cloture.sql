@@ -1,0 +1,1 @@
+{{ test_accepted_values(column_name="statut", model=get_where_subquery(ref('stg_comptes')), values=["actif","inactif","cloture"]) }}
